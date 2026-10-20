@@ -1,4 +1,4 @@
-# TaskPilot AI Ã¢â‚¬â€ Autonomous Task Execution & Verification Agent
+# TaskPilot AI ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â Autonomous Task Execution & Verification Agent
 
 TaskPilot AI receives a task, plans it into verifiable steps, executes them through
 allowlisted tools in a sandboxed workspace, and independently verifies every result
@@ -29,10 +29,10 @@ Built for HackerRank Orchestrate (October Edition).
                                   |
                                   +-> transcript.jsonl (audit trail)
 
-1. Plan Ã¢â‚¬â€ reads a structured task definition
-2. Execute Ã¢â‚¬â€ calls allowlisted tools with timeouts and bounded retries
-3. Verify Ã¢â‚¬â€ runs deterministic checks (file exists, CSV schema, row count)
-4. Report Ã¢â‚¬â€ emits a CSV with status, verified, evidence, and error per step
+1. Plan ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â reads a structured task definition
+2. Execute ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â calls allowlisted tools with timeouts and bounded retries
+3. Verify ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â runs deterministic checks (file exists, CSV schema, row count)
+4. Report ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â emits a CSV with status, verified, evidence, and error per step
 
 ## CSV output schema
 
@@ -42,17 +42,17 @@ src/taskpilot/report_writer.py is the single source of truth.
 
 ## Safety model
 
-- Path sandbox Ã¢â‚¬â€ every file tool resolves under --workspace
-- Tool allowlist Ã¢â‚¬â€ unknown actions fail with PermissionError
-- Timeouts Ã¢â‚¬â€ per-step timeout (default 30s)
-- Bounded retries Ã¢â‚¬â€ max 2 retries; exhaustion means status=failed
-- Independent verifier Ã¢â‚¬â€ never asks the LLM "did this work?"
+- Path sandbox ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â every file tool resolves under --workspace
+- Tool allowlist ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â unknown actions fail with PermissionError
+- Timeouts ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â per-step timeout (default 30s)
+- Bounded retries ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â max 2 retries; exhaustion means status=failed
+- Independent verifier ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â never asks the LLM "did this work?"
 
 ## Tests
 
     pytest -q
 
-The test suite covers, covering success, failure, retry exhaustion, unknown actions,
+The test suite covers success, failure, retry exhaustion, unknown actions,
 path escape prevention, CSV schema validation, and row count checks.
 
 ## Deliverables (Orchestrate)
