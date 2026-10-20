@@ -1,0 +1,26 @@
+{
+  "task_id": "dry-001",
+  "goal": "Filter input.csv rows where score > 50, write to output.csv",
+  "steps": [
+    {
+      "step_id": "s1",
+      "action": "write_file",
+      "target": "filter.py",
+      "args": {
+        "content": "import csv\n\nrows = list(csv.DictReader(open('input.csv')))\nfiltered = [r for r in rows if float(r['score']) > 50]\nwith open('output.csv', 'w', newline='', encoding='utf-8') as f:\n    w = csv.DictWriter(f, fieldnames=['id', 'name', 'score'])\n    w.writeheader()\n    w.writerows(filtered)\nprint(f'wrote {len(filtered)} rows')\n"
+      },
+      "verify": [{ "type": "file_exists", "path": "filter.py" }]
+    },
+    {
+      "step_id": "s2",
+      "action": "run_python",
+      "target": "filter.py",
+      "args": {},
+      "verify": [
+        { "type": "file_exists", "path": "output.csv" },
+        { "type": "csv_schema", "path": "output.csv", "columns": ["id", "name", "score"] },
+        { "type": "row_count_min", "path": "output.csv", "min": 3 }
+      ]
+    }
+  ]
+}
