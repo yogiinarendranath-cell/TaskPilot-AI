@@ -1,4 +1,4 @@
-# TaskPilot AI — Autonomous Task Execution & Verification Agent
+# TaskPilot AI Ã¢â‚¬â€ Autonomous Task Execution & Verification Agent
 
 TaskPilot AI receives a task, plans it into verifiable steps, executes them through
 allowlisted tools in a sandboxed workspace, and independently verifies every result
@@ -29,10 +29,10 @@ Built for HackerRank Orchestrate (October Edition).
                                   |
                                   +-> transcript.jsonl (audit trail)
 
-1. Plan — reads a structured task definition
-2. Execute — calls allowlisted tools with timeouts and bounded retries
-3. Verify — runs deterministic checks (file exists, CSV schema, row count)
-4. Report — emits a CSV with status, verified, evidence, and error per step
+1. Plan Ã¢â‚¬â€ reads a structured task definition
+2. Execute Ã¢â‚¬â€ calls allowlisted tools with timeouts and bounded retries
+3. Verify Ã¢â‚¬â€ runs deterministic checks (file exists, CSV schema, row count)
+4. Report Ã¢â‚¬â€ emits a CSV with status, verified, evidence, and error per step
 
 ## CSV output schema
 
@@ -42,17 +42,17 @@ src/taskpilot/report_writer.py is the single source of truth.
 
 ## Safety model
 
-- Path sandbox — every file tool resolves under --workspace
-- Tool allowlist — unknown actions fail with PermissionError
-- Timeouts — per-step timeout (default 30s)
-- Bounded retries — max 2 retries; exhaustion means status=failed
-- Independent verifier — never asks the LLM "did this work?"
+- Path sandbox Ã¢â‚¬â€ every file tool resolves under --workspace
+- Tool allowlist Ã¢â‚¬â€ unknown actions fail with PermissionError
+- Timeouts Ã¢â‚¬â€ per-step timeout (default 30s)
+- Bounded retries Ã¢â‚¬â€ max 2 retries; exhaustion means status=failed
+- Independent verifier Ã¢â‚¬â€ never asks the LLM "did this work?"
 
 ## Tests
 
     pytest -q
 
-16 tests pass, covering success, failure, retry exhaustion, unknown actions,
+The test suite covers, covering success, failure, retry exhaustion, unknown actions,
 path escape prevention, CSV schema validation, and row count checks.
 
 ## Deliverables (Orchestrate)
@@ -67,7 +67,7 @@ path escape prevention, CSV schema validation, and row count checks.
 
     $ pytest -q
     ................                    [100%]
-    16 passed in 0.19s
+    16 passed
 
     $ python -m taskpilot run --task examples\task_demo.json ...
     [taskpilot] 3 steps, 0 failed. CSV: output.csv

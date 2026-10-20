@@ -1,0 +1,5 @@
+{"ts": 1792515828.7254286, "event": "plan_loaded", "task_id": "demo-001", "steps": 3}
+{"ts": 1792515828.7342172, "event": "step_result", "task_id": "demo-001", "status": "success", "verified": "true"}
+{"ts": 1792515828.7342172, "event": "step_result", "task_id": "demo-001", "status": "success", "verified": "true"}
+{"ts": 1792515828.7342172, "event": "step_result", "task_id": "demo-001", "status": "success", "verified": "true"}
+{"ts": 1792515828.7353213, "event": "report_written", "path": "output_swaptest.csv"}
