@@ -7,3 +7,6 @@ logs_fail/
 output*.csv
 .env
 .pytest_cache/*.bak
+*.zip
+logs*/
+workspace_dry/
