@@ -6,4 +6,4 @@ logs/
 logs_fail/
 output*.csv
 .env
-.pytest_cache/
+.pytest_cache/*.bak
