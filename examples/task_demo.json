@@ -1,0 +1,33 @@
+{
+  "task_id": "demo-001",
+  "goal": "Write a two-row CSV, then verify it exists with the correct schema.",
+  "steps": [
+    {
+      "step_id": "s1",
+      "action": "write_file",
+      "target": "notes.txt",
+      "args": { "content": "hello from TaskPilot\n" },
+      "verify": [{ "type": "file_exists", "path": "notes.txt" }]
+    },
+    {
+      "step_id": "s2",
+      "action": "write_csv",
+      "target": "report.csv",
+      "args": {
+        "columns": ["name", "score"],
+        "rows": [["alice", 10], ["bob", 20]]
+      },
+      "verify": [
+        { "type": "file_exists", "path": "report.csv" },
+        { "type": "csv_schema", "path": "report.csv", "columns": ["name", "score"] },
+        { "type": "row_count_min", "path": "report.csv", "min": 2 }
+      ]
+    },
+    {
+      "step_id": "s3",
+      "action": "list_dir",
+      "target": ".",
+      "verify": [{ "type": "file_exists", "path": "report.csv" }]
+    }
+  ]
+}

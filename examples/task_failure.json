@@ -1,0 +1,12 @@
+{
+  "task_id": "fail-001",
+  "goal": "Attempt to read a file that does not exist - must be recorded as failure.",
+  "steps": [
+    {
+      "step_id": "s1",
+      "action": "read_file",
+      "target": "ghost.txt",
+      "verify": [{ "type": "file_exists", "path": "ghost.txt" }]
+    }
+  ]
+}
