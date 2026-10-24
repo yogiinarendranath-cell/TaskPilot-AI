@@ -10,3 +10,6 @@ output*.csv
 *.zip
 logs*/
 workspace_dry/
+dataset/
+*.zip
+*.csv
