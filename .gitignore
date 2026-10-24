@@ -13,3 +13,4 @@ workspace_dry/
 dataset/
 *.zip
 *.csv
+*.txt
