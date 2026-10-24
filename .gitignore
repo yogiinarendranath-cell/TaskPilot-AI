@@ -6,7 +6,7 @@ logs/
 logs_fail/
 output*.csv
 .env
-.pytest_cache/*.bak
+.pytest_cache/`n*.bak
 *.zip
 logs*/
 workspace_dry/
@@ -14,3 +14,4 @@ dataset/
 *.zip
 *.csv
 *.txt
+*.egg-info/
