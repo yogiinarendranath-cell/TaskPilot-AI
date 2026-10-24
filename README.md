@@ -74,3 +74,21 @@ path escape prevention, CSV schema validation, and row count checks.
 
     $ python -m taskpilot run --task examples\task_failure.json ...
     [taskpilot] 1 steps, 1 failed. CSV: output_fail.csv
+---
+
+## HackerRank Orchestrate Hackathon (October 2024)
+
+This repository contains the final submission for the HackerRank Orchestrate Hackathon.
+
+### The Problem: "Ghost Data Still Exists"
+Build an AI-powered deletion audit agent to prove whether a user's personal data is truly gone across systems, logs, backups, and syncs.
+
+### The Solution: `audit.py`
+Due to LLM API rate limits during the 518-row batch process, the final submission pivoted to a **Deterministic Rules Engine** for guaranteed schema compliance and zero hallucination risk. 
+
+The agent:
+1. Maps email to current and historical `user_id`s.
+2. Scans `system_activity.csv` for post-deletion recreation events (`SYNC_EXPORT`, `BACKUP_RESTORE`, `SEARCH_INDEXING`).
+3. Outputs strict JSON remediation steps.
+
+Run the engine: `python audit.py`
