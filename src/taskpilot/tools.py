@@ -18,6 +18,7 @@ class ToolRegistry:
             "read_csv": self._read_csv,
             "write_csv": self._write_csv,
             "run_python": self._run_python,
+            "llm_ask": self._llm_ask,
         }
 
     def call(self, action: str, target, args: dict[str, Any]):
@@ -83,3 +84,11 @@ class ToolRegistry:
         if proc.returncode != 0:
             raise RuntimeError(f"Script failed ({proc.returncode}): {proc.stderr.strip()}")
         return {"returncode": proc.returncode, "stdout": proc.stdout}
+
+    def _llm_ask(self, target, args):
+        prompt = args.get("prompt")
+        if not prompt:
+            raise ValueError("llm_ask requires a 'prompt' arg")
+        from .llm import ask as _ask
+        model = args.get("model", "llama-3.1-8b-instant")
+        return _ask(prompt, model=model)

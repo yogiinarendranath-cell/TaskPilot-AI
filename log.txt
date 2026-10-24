@@ -1,1 +1,28 @@
+=== TaskPilot AI / Orchestrate Hackathon - AI Chat Transcript Summary ===
+
+User: I need to build an AI-powered deletion audit agent for the "Ghost Data Still Exists" problem. I need to parse CSVs, determine if data was truly deleted, find sync paths, and generate remediation steps in strict JSON format.
+
+AI Assistant: Let's start by inspecting the dataset and building a Python agent. We will use an LLM to reason through the complex data relationships.
+
+User: I hit the Groq daily token limit (200,000 tokens) on the first batch run. 
+AI Assistant: Let's switch to Google Gemini for higher limits. 
+
+User: The Google API key is rejecting the AQ. format. We are running out of time before the submission deadline.
+AI Assistant: Pivoting to a deterministic rules engine is the safest architectural decision. We can parse the CSV relationships directly, avoid API rate limits entirely, and guarantee 100% schema compliance for all 518 rows.
+
+User: Let's do it.
+AI Assistant: (Generated deterministic audit.py)
+- Maps email -> user_id -> historical IDs from user_identities.csv and user_audit_log.csv.
+- Scans system_activity.csv for post-deletion recreation events (SYNC_EXPORT, BACKUP_RESTORE, SEARCH_INDEXING).
+- If recreation events exist or reported_status != COMPLETE, sets deletion_status to INCOMPLETE and generates ordered remediation steps.
+- If clean, sets deletion_status to COMPLETE and generates verification steps.
+- Outputs strictly validated JSON in steps_json.
+
+User: The script processed all 518 rows successfully.
+AI Assistant: Excellent. Let's package the code, output.csv, and create the evaluation reports for submission.
+
+=== Final Approach Summary ===
+I used AI to design and build a deterministic data deletion audit agent in Python. Due to LLM API rate limits during the 518-row batch process, I gracefully degraded to a rule-based engine to guarantee execution and strict schema compliance. The agent parses historical user identities, cross-references system activity logs for sync/restore events, and outputs the exact required JSON format for deletion status and remediation steps.
+
+
 AI Chat Transcript: Built a deterministic data deletion audit agent in Python. Mapped user identities and checked system activity logs for post-deletion sync events. Output strict JSON for 518 cases.

@@ -22,7 +22,7 @@ class PathSandbox:
 
 
 ALLOWED_ACTIONS = frozenset(
-    {"list_dir", "read_file", "write_file", "read_csv", "write_csv", "run_python"}
+    {"list_dir", "read_file", "write_file", "read_csv", "write_csv", "run_python", "llm_ask"}
 )
 
 
