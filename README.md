@@ -1,94 +1,31 @@
 # TaskPilot AI - Autonomous Task Execution & Verification Agent
 
-TaskPilot AI receives a task, plans it into verifiable steps, executes them through
-allowlisted tools in a sandboxed workspace, and independently verifies every result
-before claiming success.
+TaskPilot AI is a framework that receives a task, breaks it into verifiable steps, executes those steps using allowlisted tools within a sandboxed workspace, and independently verifies the results before reporting success.
 
-The agent never trusts its own claim of success. Every step must pass deterministic
-verification checks, and every failure is recorded with evidence.
+This repository contains both the core **TaskPilot AI framework** and the specific **HackerRank Orchestrate Hackathon (October 2026)** submission for the "Ghost Data Still Exists" challenge.
 
-Built for HackerRank Orchestrate (October Edition).
-
-## Quickstart (Windows / PowerShell)
-
-    py -3 -m venv .venv
-    . .\.venv\Scripts\Activate.ps1
-    python -m pip install -e . pytest
-    .\verify.ps1
-
-## Quickstart (macOS / Linux)
-
-    python3 -m venv .venv
-    source .venv/bin/activate
-    pip install -e . pytest
-    python -m taskpilot run --task examples/task_demo.json --workspace ./workspace --out ./output.csv --logs ./logs
-
-## Architecture
-
-    Task JSON -> Planner -> Executor -> Verifier -> Report Writer -> output.csv
-                                  |
-                                  +-> transcript.jsonl (audit trail)
-
-1. Plan - reads a structured task definition
-2. Execute - calls allowlisted tools with timeouts and bounded retries
-3. Verify - runs deterministic checks (file exists, CSV schema, row count)
-4. Report - emits a CSV with status, verified, evidence, and error per step
-
-## CSV output schema
-
-    task_id,step_id,action,target,status,verified,evidence,error,attempts,duration_ms
-
-src/taskpilot/report_writer.py is the single source of truth.
-
-## Safety model
-
-- Path sandbox - every file tool resolves under --workspace
-- Tool allowlist - unknown actions fail with PermissionError
-- Timeouts - per-step timeout (default 30s)
-- Bounded retries - max 2 retries; exhaustion means status=failed
-- Independent verifier - never asks the LLM "did this work?"
-
-## Tests
-
-    pytest -q
-
-The test suite covers success, failure, retry exhaustion, unknown actions,
-path escape prevention, CSV schema validation, and row count checks.
-
-## Deliverables (Orchestrate)
-
-| Requirement | Produced by |
-|---|---|
-| Code ZIP + README | This repo |
-| Output CSV | report_writer.py -> output.csv |
-| AI chat transcript | logs/transcript.jsonl |
-
-## Verified output
-
-    $ pytest -q
-    ................                    [100%]
-    16 passed
-
-    $ python -m taskpilot run --task examples\task_demo.json ...
-    [taskpilot] 3 steps, 0 failed. CSV: output.csv
-
-    $ python -m taskpilot run --task examples\task_failure.json ...
-    [taskpilot] 1 steps, 1 failed. CSV: output_fail.csv
 ---
 
-## HackerRank Orchestrate Hackathon (October 2024)
+## 1. HackerRank Orchestrate Hackathon (October 2026)
 
-This repository contains the final submission for the HackerRank Orchestrate Hackathon.
+**Problem:** "Ghost Data Still Exists" - Build an AI-powered deletion audit agent to prove whether a user's personal data is truly gone across primary databases, secondary logs, search indexes, and backup syncs.
 
-### The Problem: "Ghost Data Still Exists"
-Build an AI-powered deletion audit agent to prove whether a user's personal data is truly gone across systems, logs, backups, and syncs.
+**Solution (`audit.py`):**
+To guarantee schema compliance and avoid LLM-generated audit decisions in the final submission, the solution utilizes a deterministic rules engine. The agent:
+1. Maps current email addresses to current and historical `user_id`s.
+2. Reconstructs the timeline by scanning `system_activity.csv` for post-deletion recreation events (`SYNC_EXPORT`, `BACKUP_RESTORE`, `SEARCH_INDEXING`).
+3. Determines the `deletion_status` (`COMPLETE`, `INCOMPLETE`, `NOT_APPLICABLE`).
+4. Outputs strict JSON remediation steps required to fix the deletion pipeline.
 
-### The Solution: `audit.py`
-Due to LLM API rate limits during the 518-row batch process, the final submission pivoted to a **Deterministic Rules Engine** for guaranteed schema compliance and zero hallucination risk. 
+**Hackathon Status:** Submission received. AI Judge interview completed. Evaluation underway (Results expected Oct 27, 2026).
 
-The agent:
-1. Maps email to current and historical `user_id`s.
-2. Scans `system_activity.csv` for post-deletion recreation events (`SYNC_EXPORT`, `BACKUP_RESTORE`, `SEARCH_INDEXING`).
-3. Outputs strict JSON remediation steps.
+---
 
-Run the engine: `python audit.py`
+## 2. TaskPilot AI Core Framework
+
+The core `src/taskpilot` framework is a deterministic agent that executes JSON task definitions, verifies the results, and outputs a verification report.
+
+### Workflow 1: HackerRank Audit (`audit.py`)
+To run the specific hackathon submission that processes the 518 deletion requests:
+```bash
+python audit.py
